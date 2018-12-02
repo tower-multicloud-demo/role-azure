@@ -7,8 +7,8 @@
   register: nics
 
 - debug:
-  var: nics
-  verbosity: 2
+    var: nics
+    verbosity: 2
 
 - name: Get list of IP address to Add 
   vars:
