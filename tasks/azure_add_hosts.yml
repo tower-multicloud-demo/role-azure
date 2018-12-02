@@ -6,7 +6,7 @@
   with_sequence: count="{{az_count}}" 
   register: nics
 
--debug:
+- debug:
   var: nics
   verbosity: 2
 
