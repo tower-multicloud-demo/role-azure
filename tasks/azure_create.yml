@@ -22,7 +22,7 @@
   azure_rm_publicipaddress:
     resource_group: "{{ az_resourcegroup_name }}"
     name: "{{ az_scope }}-public-{{ item }}"
-    allocation_method: dynamic
+    allocation_method: Dynamic
   with_sequence: count="{{az_count}}" 
 
 - name: Create NICs
