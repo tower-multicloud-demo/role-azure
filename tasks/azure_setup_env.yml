@@ -1,0 +1,90 @@
+---
+- name:  Create {{ az_resourcegroup_name }} Resource Group on {{ az_region }}
+  local_action:
+    module: azure_rm_resourcegroup
+    location: "{{ az_location }}"
+    name: "{{ az_resourcegroup_name }}"
+    state: present
+    tags:
+      purpose: "{{ az_environment }}"
+
+- name:  Create {{ az_virtualnet_name }} Virtual Network on {{ az_region }}
+  local_action:
+    module: azure_rm_virtualnetwork
+    location: "{{ az_location }}"
+    resource_group: "{{ az_resourcegroup_name }}"
+    name: "{{ az_virtualnet_name }}"
+    address_prefixes_cidr: "{{ az_vn_cidr_prefix }}"
+    state: present
+    tags:
+      purpose: "{{ az_environment }}"
+
+- name:  Create {{ az_subnet_name }} Subnet on {{ az_region }}
+  local_action:
+    module: azure_rm_subnet
+    name: "{{ az_subnet_name }}"
+    resource_group: "{{ az_resourcegroup_name }}"
+    virtual_network_name: "{{ az_virtualnet_name }}"
+    address_prefix_cidr: "{{ az_sub_cidr_prefix }}"
+    state: present
+    tags:
+      purpose: "{{ az_environment }}"
+
+- name: Create "{{ az_storageaccount_name }}" Storage Account for "{{ az_resourcegroup_name }}"
+  local_action:
+    module: azure_rm_storageaccount
+    name: "{{ az_storageaccount_name }}"
+    resource_group: "{{ az_resourcegroup_name }}"
+    location: "{{ az_location }}"
+    type: "{{ az_storageaccount_type }}"
+    kind: "{{ az_storageaccount_kind }}"
+    # access_tier: "{{ az_storageaccount_tier }}"
+    state: present
+    tags:
+      purpose: "{{ az_environment }}"
+
+- name: Create {{ az_availabilitysets_name }}
+  local_action:
+    module: azure_rm_availabilityset
+    resource_group: "{{ az_resourcegroup_name }}"
+    name: "{{ az_availabilitysets_name }}"
+    location: "{{ az_location }}"
+    sku: "{{ az_availabilitysets_sku }}"
+
+- name: Create public ip for {{ az_loadbalancer_name }}
+  local_action:
+    module: azure_rm_publicipaddress
+    resource_group: "{{ az_resourcegroup_name }}"
+    allocation_method: "{{ az_public_ip_method }}"
+    name: "{{ az_lb_public_ip_name }}"
+    domain_name_label: "{{ az_lb_domain_name_label }}"
+  register: r_lb_public_ip
+
+- name: Create {{ az_loadbalancer_name }}
+  local_action:
+    module: azure_rm_loadbalancer
+    resource_group: "{{ az_resourcegroup_name }}"
+    name: "{{ az_loadbalancer_name }}"
+    location: "{{ az_location }}"
+    frontend_ip_configurations:
+      - name: "{{ az_loadbalancer_name }}-frontend"
+        public_ip_address: "{{ az_lb_public_ip_name }}"
+    backend_address_pools:
+      - name: "{{ az_loadbalancer_name }}-web-srv"
+    probes:
+      - name: "{{ az_loadbalancer_name }}-probe"
+        protocol: Tcp
+        port: "{{ az_loadbalancer_bport }}"
+        interval: 5
+        fail_count: 3
+    load_balancing_rules:
+      - name: "{{ az_loadbalancer_name }}-rule"
+        protocol: Tcp
+        frontend_ip_configuration: "{{ az_loadbalancer_name }}-frontend"
+        probe: "{{ az_loadbalancer_name }}-probe"
+        load_distribution: Default
+        backend_address_pool: "{{ az_loadbalancer_name }}-web-srv"
+        frontend_port: "{{ az_loadbalancer_fport }}"
+        backend_port: "{{ az_loadbalancer_bport }}"
+        idle_timeout: 4
+    state: present

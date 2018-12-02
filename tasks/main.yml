@@ -1,2 +1,6 @@
 ---
 # tasks file for azure
+- name: 'Including Azure create tasks'
+  include_tasks: azure_create.yml
+- name: 'Adding Azures VMs to the in memory inventory'
+  include_tasks: azure_add_hosts.yml

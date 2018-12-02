@@ -1,0 +1,27 @@
+---
+- name: Remove a set of azure virtual machines
+  azure_rm_virtualmachine:
+    resource_group: "{{ az_groupid }}"
+    name: "{{ az_scope }}-{{ item }}"
+    state: absent
+    remove_on_absent: all
+  async: 1000
+  poll: 15
+  with_sequence: count="{{az_count}}" 
+  ignore_errors: yes
+
+- name: Remove associated network interfaces 
+  azure_rm_networkinterface:
+    name: "nic-{{ az_scope }}-{{ item }}"
+    resource_group: "{{ az_groupid }}"
+    state: absent
+  with_sequence: count="{{az_count}}" 
+  ignore_errors: yes
+
+- name: Remove associated disks 
+  azure_rm_managed_disk:
+    name: "{{ az_scope }}-{{ item }}"
+    resource_group: "{{ az_groupid }}"
+    state: absent
+  with_sequence: count="{{az_count}}" 
+  ignore_errors: yes

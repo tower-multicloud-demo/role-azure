@@ -1,0 +1,27 @@
+---
+- name: Get facts for network interfaces
+  azure_rm_networkinterface_facts:
+    resource_group: "{{ az_resourcegroup_name }}"
+    name: "nic-{{ az_scope }}-{{ item }}"
+  with_sequence: count="{{az_count}}" 
+  register: nics
+
+- name: Get list of IP address to Add 
+  vars:
+    ip_query: 'results[*].ansible_facts.azure_networkinterfaces[0].properties.ipConfigurations[*].properties.privateIPAddress'
+    ips_to_add: "{{ nics | json_query(ip_query) }}"
+  set_fact:  
+    ips_to_add: "{{ ips_to_add }}"
+
+- name: Add hosts to in memory inventory
+  add_host:
+    name: "{{ item }}"
+    groups: "{{ az_scope }}"
+  with_items: "{{ ips_to_add }}" 
+
+- name: Wait for SSH to come up
+  wait_for_connection:
+    timeout: 600
+    sleep: 15
+  delegate_to: "{{ item }}"
+  with_items: "{{ ips_to_add }}"

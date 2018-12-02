@@ -1,2 +1,44 @@
 ---
 # defaults file for azure
+
+# Lab variables
+customer: "demolab"
+az_environment: "blue"
+az_region: "westeurope"
+az_location: "{{ az_region }}"
+az_resourcegroup_name: "{{ az_environment }}_rg"
+az_storageaccount_name: "{{ customer }}{{ az_environment }}sto01"
+az_storageaccount_type: "Standard_LRS"
+az_storageaccount_kind: "Storage"
+az_storageaccount_tier: "cool"
+az_subnet_name: "{{ az_environment }}_subnet"
+az_virtualnet_name: "{{ az_environment }}_virtnet"
+az_vn_cidr_prefix: "10.0.0.0/8"
+az_sub_cidr_prefix: "10.0.0.0/8"
+az_secgroup_name: "{{ az_environment }}_secgroup"
+az_ssh_pwd_enabled: "false"
+az_availabilitysets_name: "{{ customer }}_{{ az_environment }}_availsets"
+az_lb_public_ip_name: "{{ az_loadbalancer_name }}-publicip"
+az_public_ip_method: "Static"
+az_loadbalancer_name: "{{ az_environment }}-lb"
+az_loadbalancer_fport: "80"
+az_loadbalancer_bport: "80"
+az_lb_domain_name_label: "hdnhd"
+az_availabilitysets_sku: "Aligned"
+az_managed_disk_type: "Standard_LRS"
+
+# VM variables
+scope: foo
+az_count: 2
+az_scope : "{{ scope }}"
+az_delete: foo
+az_groupid : "{{ az_resourcegroup_name }}"
+ssh_username: "{{ ssh_username }}"
+ssh_key: "{{ ssh_key }}"
+az_image_offer: RHEL
+az_image_publisher: Redhat
+az_image_sku: '7-LVM'
+az_image_version: latest
+az_application: "Python ML"
+az_os_type_vm: "Linux"
+az_vm_size: Standard_B1s   
