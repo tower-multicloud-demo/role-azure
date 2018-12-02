@@ -27,6 +27,7 @@
     security_group: "{{ az_secgroup_name }}"
     ip_configurations:
       - name: "{{ az_scope }}-{{ item }}"
+        public_ip_address_name: None
         load_balancer_backend_address_pools:
           - name: "{{ az_loadbalancer_name }}-web-srv"
             load_balancer: "{{ az_loadbalancer_name }}"
