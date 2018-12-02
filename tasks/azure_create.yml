@@ -18,6 +18,13 @@
         direction: Inbound
   run_once: yes
 
+- name: Create a public ip address
+  azure_rm_publicipaddress:
+    resource_group: "{{ az_resourcegroup_name }}"
+    name: "{{ az_scope }}-public-{{ item }}"
+    allocation_method: dynamic
+  with_sequence: count="{{az_count}}" 
+
 - name: Create NICs
   azure_rm_networkinterface:
     resource_group: "{{ az_resourcegroup_name }}"
