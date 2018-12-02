@@ -8,7 +8,7 @@
 
 - name: Get list of IP address to Add 
   vars:
-    ip_query: 'results[*].ansible_facts.azure_networkinterfaces[0].properties.ipConfigurations[*].properties.privateIPAddress'
+    ip_query: 'results[*].ansible_facts.azure_networkinterfaces[0].properties.ipConfigurations[*].properties.publicIPAddress'
     ips_to_add: "{{ nics | json_query(ip_query) }}"
   set_fact:  
     ips_to_add: "{{ ips_to_add }}"
