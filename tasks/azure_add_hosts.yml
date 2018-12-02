@@ -6,6 +6,10 @@
   with_sequence: count="{{az_count}}" 
   register: nics
 
+-debug:
+  var: nics
+  verbosity: 2
+
 - name: Get list of IP address to Add 
   vars:
     ip_query: 'results[*].ansible_facts.azure_networkinterfaces[0].properties.ipConfigurations[*].properties.publicIPAddress'
