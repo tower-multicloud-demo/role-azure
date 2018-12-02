@@ -26,8 +26,8 @@
     subnet: "{{ az_subnet_name }}"
     security_group: "{{ az_secgroup_name }}"
     ip_configurations:
-      - public_ip_address_name: "{{ az_scope }}-{{ item }}"
       - name: "{{ az_scope }}-{{ item }}"
+        public_ip_address_name: "{{ az_scope }}-public-{{ item }}"
         load_balancer_backend_address_pools:
           - name: "{{ az_loadbalancer_name }}-web-srv"
             load_balancer: "{{ az_loadbalancer_name }}"
