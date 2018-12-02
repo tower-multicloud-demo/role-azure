@@ -18,13 +18,6 @@
         direction: Inbound
   run_once: yes
 
-- name: Create a public ip address
-  azure_rm_publicipaddress:
-    resource_group: "{{ az_resourcegroup_name }}"
-    name: "{{ az_scope }}-public-{{ item }}"
-    allocation_method: Dynamic
-  with_sequence: count="{{az_count}}" 
-
 - name: Create NICs
   azure_rm_networkinterface:
     resource_group: "{{ az_resourcegroup_name }}"
@@ -34,7 +27,6 @@
     security_group: "{{ az_secgroup_name }}"
     ip_configurations:
       - name: "{{ az_scope }}-{{ item }}"
-        public_ip_address_name: "{{ az_scope }}-public-{{ item }}"
         load_balancer_backend_address_pools:
           - name: "{{ az_loadbalancer_name }}-web-srv"
             load_balancer: "{{ az_loadbalancer_name }}"
