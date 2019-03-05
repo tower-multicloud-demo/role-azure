@@ -36,7 +36,7 @@
   azure_rm_virtualmachine:
     resource_group: "{{ az_resourcegroup_name }}"
     location: "{{ az_location }}"
-    availability_set: "{{ az_availabilitysets_name }}"
+    # availability_set: "{{ az_availabilitysets_name }}"
     name: "{{ az_scope }}-{{ item }}"
     vm_size: "{{ az_vm_size }}"
     os_type: "{{ az_os_type_vm }}"
