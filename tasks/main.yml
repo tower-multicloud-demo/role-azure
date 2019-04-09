@@ -55,8 +55,8 @@
         AAAAB3NzaC1yc2EAAAADAQABAAABAQCt+6BmraN96zQWWXDFKWxlEOjfS2ggahCLrzYL+kFU29gEGU94wa4fOXVP/BM7bTKWwpkkusHVd8H7vngski1+xj2/PgZgLQ5ze0LGapO10wubnpzqYweJkvLiq1b+LN4ieiCR3JNgg5yFP5rGM85EkRQsW26+9VD4NR4LoghF+yxB3H1M/WC61MxtZqc+U7FjeUNPpWAYkWvstSAJbAWix9P+BJD2939cJhrKh1Kq10GzvHUQWBD3xGt9cnwsbHa00xJJMiFXwMoMJOJOh9UF9JjzV9xEtvAlnP5e/LFdN6eIx9y/lA/+qhtpdI5XCnnUIcDN017Go13UYr8NTU4j"
     network_interfaces: myNIC
     image:
-      offer: CentOS
-      publisher: OpenLogic
+      offer: RHEL
+      publisher: RedHat
       sku: '7.5'
       version: latest
   register: azurevm  
