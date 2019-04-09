@@ -63,5 +63,5 @@
   
 - name: debug register
   debug:
-    var: azurevm
+    var: azurevm.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress
  
