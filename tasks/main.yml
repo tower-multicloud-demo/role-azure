@@ -34,6 +34,12 @@
         access: Allow
         priority: 1001
         direction: Inbound
+      - name: SSH
+        protocol: Tcp
+        destination_port_range: 80
+        access: Allow
+        priority: 1005
+        direction: Inbound
 - name: Create virtual network inteface card
   azure_rm_networkinterface:
     resource_group: myResourceGroup
