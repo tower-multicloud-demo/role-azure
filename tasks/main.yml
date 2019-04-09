@@ -59,5 +59,8 @@
       publisher: OpenLogic
       sku: '7.5'
       version: latest
-  register: azurevm    
+  register: azurevm  
+  
+  - debug:
+      var: azurevm
       
