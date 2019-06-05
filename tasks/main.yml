@@ -65,6 +65,8 @@
       publisher: RedHat
       sku: '7.5'
       version: latest
+    tags: 
+        'Group': 'webservers'
   register: azurevm  
   
 - name: debug register
