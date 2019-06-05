@@ -52,7 +52,7 @@
   azure_rm_virtualmachine:
     resource_group: towerdemo
     name: myVM
-    vm_size: Standard_DS1_v2
+    vm_size: Standard_DS2_v2
     admin_username: ec2-user
     ssh_password_enabled: false
     ssh_public_keys:
