@@ -53,7 +53,7 @@
     resource_group: towerdemo
     name: myVM
     vm_size: Standard_DS2_v2
-    admin_username: ec2-user
+    admin_username: azureuser
     ssh_password_enabled: false
     ssh_public_keys:
       - path: /home/azureuser/.ssh/authorized_keys
