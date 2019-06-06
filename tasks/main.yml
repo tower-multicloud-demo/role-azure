@@ -51,7 +51,7 @@
 - name: Create VM
   azure_rm_virtualmachine:
     resource_group: towerdemo
-    name: myVM
+    name: clouddemo
     vm_size: Standard_DS2_v2
     admin_username: ec2-user
     ssh_password_enabled: false
